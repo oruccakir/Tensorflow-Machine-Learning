@@ -5,26 +5,25 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import os
 
-path = "C:\\Users\\orucc\\Desktop\\Coding_Projects\\Tensorflow Machine Learning\\Tensorflow-Machine-Learning-1\\Audio\\keyword_spotting_87"
+try:
+    from vpython import *
+except ZeroDivisionError:
+    print()
+
+# Küreyi oluştur
+ball = sphere(pos=vector(0, 0, 0), radius=0.4, color=color.blue)
+
+# Hareket hızı
+move_speed = 1
+
+path = "C:\\Users\\orucc\\Desktop\\Coding_Projects\\Tensorflow Machine Learning\\Tensorflow-Machine-Learning-1\\Audio\\recognize_keyword_with_more_data"
 model = tf.keras.models.load_model(path)
 print(model.summary())
 
-"""
-label_names = np.array(['down',
- 'go',
- 'left',
- 'no',
- 'off',
- 'on',
- 'right',
- 'stop',
- 'up',
- 'yes',
- '_silence_',
- '_unknown_'])
 
-"""
-label_names = ['down', 'go' ,'left', 'no', 'right', 'stop', 'up' ,'yes']
+label_names = np.array(['down','go','left','no','off','on','right','stop','up','yes','_silence_','_unknown_'])
+
+#label_names = ['down', 'go' ,'left', 'no', 'right', 'stop', 'up' ,'yes']
 
 
 print(label_names)
@@ -48,7 +47,7 @@ CHUNK = 1024
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 3
+RECORD_SECONDS = 2
 
 audio = pyaudio.PyAudio()
 
@@ -92,6 +91,7 @@ while(True):
         guess = guess.numpy()
         print(guess)
         print(label_names[guess])
+        direction = label_names[guess]
 
 
 
@@ -99,6 +99,19 @@ while(True):
         stream.stop_stream()
         stream.close()
         audio.terminate()
+
+        if direction == "left":
+            ball.pos.x -= move_speed
+        elif direction == "right":
+            ball.pos.x += move_speed
+        elif direction == "up":
+            ball.pos.y += move_speed
+        elif direction == "down":
+            ball.pos.y -= move_speed
+        elif direction == "go":
+            ball.pos.z -= move_speed
+        elif direction == "yes":
+            ball.pos.z += move_speed
 
         # Ses verisini çal
         audio_play = pyaudio.PyAudio()
@@ -111,6 +124,8 @@ while(True):
             play_stream.write(frame)
 
         print("Finished playing audio.")
+
+
 
         play_stream.stop_stream()
         play_stream.close()

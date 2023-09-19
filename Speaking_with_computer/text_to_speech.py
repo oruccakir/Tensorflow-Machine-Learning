@@ -13,7 +13,10 @@ def talk(text):
 
 
 # Text you want your computer to say
-text_to_speak = "Hello, I am your computer, and I can speak! what are you doing today? I just want to know about you. Tell me everything. Why did you make me talk and what is your name. I love the table and Oruç"
+
+text = "Explore the most advanced text to speech and voice cloning software ever. Create lifelike voiceovers for your content or use our AI voice generator as an easy-to-use text reader.Let your content go beyond text with our advanced Text to Speech tool. Generate high-quality spoken audio in any voice, style, and language. Our text rea"
+
+text_to_speak = text
 
 talk(text_to_speak)
 

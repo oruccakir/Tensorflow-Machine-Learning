@@ -102,7 +102,7 @@ CHUNK = 1024
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 3
+RECORD_SECONDS = 5
 
 audio = pyaudio.PyAudio()
 
