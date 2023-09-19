@@ -13,7 +13,7 @@ def talk(text):
 
 
 # Text you want your computer to say
-text_to_speak = "Hello, I am your computer, and I can speak! what are you doing today? I just want to know about you. Tell me everything. Why did you make me talk and what is your name"
+text_to_speak = "Hello, I am your computer, and I can speak! what are you doing today? I just want to know about you. Tell me everything. Why did you make me talk and what is your name. I love the table and Oruç"
 
 talk(text_to_speak)
 

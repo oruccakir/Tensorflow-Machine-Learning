@@ -5,10 +5,11 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import os
 
-path = "C:\\Users\\orucc\\Desktop\\Coding_Projects\\Tensorflow Machine Learning\\Tensorflow-Machine-Learning-1\\Audio\\recognize_keyword_with_more_data"
+path = "C:\\Users\\orucc\\Desktop\\Coding_Projects\\Tensorflow Machine Learning\\Tensorflow-Machine-Learning-1\\Audio\\keyword_spotting_87"
 model = tf.keras.models.load_model(path)
 print(model.summary())
 
+"""
 label_names = np.array(['down',
  'go',
  'left',
@@ -21,6 +22,11 @@ label_names = np.array(['down',
  'yes',
  '_silence_',
  '_unknown_'])
+
+"""
+label_names = ['down', 'go' ,'left', 'no', 'right', 'stop', 'up' ,'yes']
+
+
 print(label_names)
 
 def get_spectrogram(waveform):
@@ -42,11 +48,11 @@ CHUNK = 1024
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 2
+RECORD_SECONDS = 3
 
 audio = pyaudio.PyAudio()
 
-"""
+
 while(True):
 
     command = input("Enter the command :")
@@ -112,4 +118,3 @@ while(True):
     else:
         break
         
-"""
