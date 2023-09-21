@@ -5,22 +5,27 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import os
 
+try:
+    from vpython import *
+except ZeroDivisionError:
+    print()
+
+# Küreyi oluştur
+ball = sphere(pos=vector(0, 0, 0), radius=0.4, color=color.blue)
+
+# Hareket hızı
+move_speed = 1
+
 path = "C:\\Users\\orucc\\Desktop\\Coding_Projects\\Tensorflow Machine Learning\\Tensorflow-Machine-Learning-1\\Audio\\recognize_keyword_with_more_data"
 model = tf.keras.models.load_model(path)
 print(model.summary())
 
-label_names = np.array(['down',
- 'go',
- 'left',
- 'no',
- 'off',
- 'on',
- 'right',
- 'stop',
- 'up',
- 'yes',
- '_silence_',
- '_unknown_'])
+
+label_names = np.array(['down','go','left','no','off','on','right','stop','up','yes','_silence_','_unknown_'])
+
+#label_names = ['down', 'go' ,'left', 'no', 'right', 'stop', 'up' ,'yes']
+
+
 print(label_names)
 
 def get_spectrogram(waveform):
@@ -46,7 +51,7 @@ RECORD_SECONDS = 2
 
 audio = pyaudio.PyAudio()
 
-"""
+
 while(True):
 
     command = input("Enter the command :")
@@ -86,6 +91,7 @@ while(True):
         guess = guess.numpy()
         print(guess)
         print(label_names[guess])
+        direction = label_names[guess]
 
 
 
@@ -94,6 +100,23 @@ while(True):
         stream.close()
         audio.terminate()
 
+        if direction == "left":
+            ball.pos.x -= move_speed
+        elif direction == "right":
+            ball.pos.x += move_speed
+        elif direction == "up":
+            ball.pos.y += move_speed
+        elif direction == "down":
+            ball.pos.y -= move_speed
+        elif direction == "go":
+            ball.pos.z -= move_speed
+        elif direction == "yes":
+            ball.pos.z += move_speed
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 8dc8fb041c618550ce7e7aa57cd32fc2ed356667
         # Ses verisini çal
         audio_play = pyaudio.PyAudio()
         play_stream = audio_play.open(format=FORMAT, channels=CHANNELS,
@@ -106,10 +129,11 @@ while(True):
 
         print("Finished playing audio.")
 
+
+
         play_stream.stop_stream()
         play_stream.close()
 
     else:
         break
         
-"""

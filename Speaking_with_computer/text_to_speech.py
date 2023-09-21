@@ -1,30 +1,25 @@
 import pyttsx3
 
+def talk(text):
+    engine = pyttsx3.init()
+
+    engine.setProperty('voice','HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0')
+
+    # Speak the text
+    engine.say(text)
+
+    # Wait for the speech to finish
+    engine.runAndWait()
+
+
 # Text you want your computer to say
-text_to_speak = "Hello, I am your computer, and I can speak! what are you doing today? I just want to know about you. Tell me everything. Why did you make me talk and what is your name"
 
-# Initialize the text-to-speech engine
-engine = pyttsx3.init()
+text = "Explore the most advanced text to speech and voice cloning software ever. Create lifelike voiceovers for your content or use our AI voice generator as an easy-to-use text reader.Let your content go beyond text with our advanced Text to Speech tool. Generate high-quality spoken audio in any voice, style, and language. Our text rea"
 
-# Set properties (optional)
-# You can customize the voice and speech rate, among other things.
-# For example, you can set a specific voice using:
-#engine.setProperty('voice', 'com.apple.speech.synthesis.voice.Alex')
-# Note: Voice names may vary depending on your operating system.
+text_to_speak = text
 
-engine.setProperty('voice','HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0')
+talk(text_to_speak)
 
-# Get the available voices
-voices = engine.getProperty('voices')
 
-for voice in voices:
-    print(voice)
-    if "male" in voice.name.lower():
-        engine.setProperty('voice', voice.id)
-        break  # Stop when a male voice is found
 
-# Speak the text
-engine.say(text_to_speak)
 
-# Wait for the speech to finish
-engine.runAndWait()
