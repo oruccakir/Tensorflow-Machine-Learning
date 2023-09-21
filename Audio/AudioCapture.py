@@ -114,7 +114,10 @@ while(True):
             ball.pos.z += move_speed
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8dc8fb041c618550ce7e7aa57cd32fc2ed356667
 =======
 >>>>>>> 8dc8fb041c618550ce7e7aa57cd32fc2ed356667
         # Ses verisini çal
