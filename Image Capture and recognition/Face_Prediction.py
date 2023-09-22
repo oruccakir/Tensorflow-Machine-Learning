@@ -9,7 +9,7 @@ face_model= FaceModel(path)
 
 while True:
 
-    face_model.say_the_result("Show me yourself by looking at the camera?")
+    face_model.say_the_result("Show me yourself, by looking at, the camera?")
 
     command = input("Enter command : ")
 
@@ -18,7 +18,7 @@ while True:
         
         pred_class = face_model.pred_and_plot(filename="Image Capture and recognition\\Captured_images\\image.jpg")
 
-        text = f"Person is detected Estimate  {str(pred_class)}"
+        text = f"Person is detected ,Estimate  ,{str(pred_class)}"
 
         print("Estimate : ",str(pred_class))
 
