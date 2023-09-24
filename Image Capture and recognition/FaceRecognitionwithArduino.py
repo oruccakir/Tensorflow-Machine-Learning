@@ -15,24 +15,13 @@ time.sleep(1)
 
 while True:
     
-    cam_command = arduinoData.readline()
-    cam_command = str(cam_command,'utf-8')
-    cam_command = cam_command.strip('\r\n')
+    cam_command = input("Take photo : ")
 
-    print(cam_command=="0")
-    print(cam_command)
-
-    if cam_command == "0":
+    if cam_command == "1":
 
         image = face_model.capture_the_image()
         
         pred_class = face_model.pred_and_plot(filename="Image Capture and recognition\\Captured_images\\image.jpg")
-
-        text = f"Person is detected ,Estimate  ,{str(pred_class)}"
-
-        print("Estimate : ",str(pred_class))
-
-        face_model.say_the_result(text=text)
 
         if(pred_class == "Oruç"):
             command = "yellow"
@@ -40,7 +29,13 @@ while True:
             command = "red"
         
         arduinoData.write(command.encode())
-        
+
+        text = f"Person is detected ,Estimate  ,{str(pred_class)}"
+
+        print("Estimate : ",str(pred_class))
+
+        face_model.say_the_result(text=text)
+
         cv2.imshow("Me",image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
