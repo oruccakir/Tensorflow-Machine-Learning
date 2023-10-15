@@ -47,7 +47,7 @@ CHUNK = 1024
 FORMAT = pyaudio.paFloat32
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 2
+RECORD_SECONDS = 1
 
 audio = pyaudio.PyAudio()
 
@@ -113,13 +113,6 @@ while(True):
         elif direction == "yes":
             ball.pos.z += move_speed
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 8dc8fb041c618550ce7e7aa57cd32fc2ed356667
-=======
->>>>>>> 8dc8fb041c618550ce7e7aa57cd32fc2ed356667
         # Ses verisini çal
         audio_play = pyaudio.PyAudio()
         play_stream = audio_play.open(format=FORMAT, channels=CHANNELS,
