@@ -2,12 +2,19 @@ import cv2
 import tensorflow as tf
 from object_detection_functions import *
 import threading
+import torch
+import serial
+import time
 
 
 # load the model that will be used
 # get the pretrained model
-module_handle = "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_resnet_v2/1"
-detector = hub.load(module_handle).signatures['default']
+
+#module_handle = "https://tfhub.dev/google/faster_rcnn/openimages_v4/inception_resnet_v2/1"
+#detector = hub.load(module_handle).signatures['default']
+
+# Load the YOLOv5 model
+model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)  # 'yolov5s' is the smallest model. You can also use 'yolov5m', 'yolov5l', or 'yolov5x'.
 
 # Initialize video capture
 cap = cv2.VideoCapture(0)
@@ -48,6 +55,30 @@ video_thread.start()
 
 frame_for_model = None
 
+
+arduinoPort = "com6"
+arduinoData = serial.Serial(arduinoPort,"9600")
+time.sleep(1)
+
+arduino_info = None
+
+arduino_lock = threading.Lock()
+
+
+def sendInfoToArduino():
+    data = None
+    while True:
+        data = arduino_info
+        if data is not None:
+            print(data)
+            arduinoData.write(data.encode())
+            time.sleep(0.8)
+
+arduino_thread = threading.Thread(target=sendInfoToArduino)
+
+#arduino_thread.start()
+
+
 while True:
 
     with frame_lock:
@@ -58,6 +89,25 @@ while True:
     if frame_for_model is not None:
         cv2.imwrite(image_path,frame_for_model)
 
-        result = run_detector(detector,image_path)
-        print(result)
+        #result = run_detector(detector,image_path)
+        #print(result)
+        img = cv2.imread(image_path)  # Using OpenCV to load the image
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert from BGR to RGB
+        # Perform inference
+        results = model(img)
+        info = str(results)
+        if "person" in info:
+            arduino_info = "Person"
+            print("PERSON DETECTED")
+        else:
+            arduino_info = "Notperson"
+            print("PERSON NOT DETECTED")
+        
+        arduinoData.write(arduino_info.encode())
+        time.sleep(1)
+        
+        
+        # Results
+        results.print()  # Print results to console
+
 

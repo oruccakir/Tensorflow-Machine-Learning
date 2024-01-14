@@ -1,20 +1,25 @@
-import tensorflow as tf
-import tensorflow_hub as hub
+import torch
+from matplotlib import pyplot as plt
+import cv2
 
-# Load a pre-trained model (e.g., SSD MobileNet V2)
-detector = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/2")
+# Load the YOLOv5 model
+model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)  # 'yolov5s' is the smallest model. You can also use 'yolov5m', 'yolov5l', or 'yolov5x'.
 
-# Function to run detection
-def detect_objects(image_path):
-    img = tf.io.read_file(image_path)
-    img = tf.image.decode_image(img, channels=3)
-    img = tf.image.convert_image_dtype(img, tf.float32)
-    img = tf.expand_dims(img, 0)  # Add batch dimension
+# Load an image
+img_path = 'Object_detection\\image.jpg'  # Replace with your image path
+img = cv2.imread(img_path)  # Using OpenCV to load the image
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert from BGR to RGB
 
-    detector_output = detector(img)
-    return detector_output
+# Perform inference
+results = model(img)
 
-# Example usage
-image_path = 'Object_detection\\image.jpg'
-detection_result = detect_objects(image_path)
-print(detection_result)
+# Results
+results.print()  # Print results to console
+results.show()  # Show the image with bounding boxes
+
+
+
+# To use the results in your application, you can access the raw predictions
+# results.xyxy[0]  # img1 predictions (tensor)
+# results.pandas().xyxy[0]  # img1 predictions (pandas)
+
