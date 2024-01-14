@@ -8,6 +8,7 @@ int redLed = A0;
 int lazerPin = A2;
 
 String data  = "";
+String servoData = "";
 
 int pos = 0;
 
@@ -32,12 +33,14 @@ void loop() {
 
   data = Serial.readStringUntil('\n');
 
-  if(data == "Person"){
+  if(data.substring(0,6) == "Person"){
+    servoData = data.substring(6,data.length());
+    pos = servoData.toInt();
     digitalWrite(yellowLed,HIGH);
     digitalWrite(lazerPin,HIGH);
     digitalWrite(redLed,LOW);
 
-    servo.write(110);
+    servo.write(pos);
 
   }
   else{
