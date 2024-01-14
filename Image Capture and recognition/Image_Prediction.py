@@ -6,8 +6,6 @@ path = "Image Capture and recognition\\Saved_Models\\domainnet_without_mixed_pre
 
 image_model= ImageModel(path)
 
-
-
 while True:
 
     image_model.say_the_result("Do you want to show image to predict ?")
