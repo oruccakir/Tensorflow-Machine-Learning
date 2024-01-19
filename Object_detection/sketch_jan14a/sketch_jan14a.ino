@@ -33,9 +33,11 @@ void loop() {
 
   data = Serial.readStringUntil('\n');
 
-  if(data.substring(0,6) == "Person"){
-    servoData = data.substring(6,data.length());
-    pos = servoData.toInt();
+  if(data != "Not"){
+    if(data == "po")
+        pos = 180;
+    else
+      pos = 0;
     digitalWrite(yellowLed,HIGH);
     digitalWrite(lazerPin,HIGH);
     digitalWrite(redLed,LOW);
@@ -47,7 +49,7 @@ void loop() {
     digitalWrite(yellowLed,LOW);
     digitalWrite(redLed,HIGH);
     digitalWrite(lazerPin,LOW);
-    servo.write(0);
+    servo.write(90);
   }
   
 

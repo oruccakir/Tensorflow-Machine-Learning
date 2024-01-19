@@ -5,7 +5,11 @@ import threading
 import torch
 import serial
 import time
+from FaceModel import FaceModel
 
+path = "C:\\Users\\orucc\\Desktop\\oruc_and_erdem"
+
+face_model= FaceModel(path)
 
 # load the model that will be used
 # get the pretrained model
@@ -98,10 +102,15 @@ while True:
         results = model(img)
         info = str(results)
         if "person" in info:
-            arduino_info = "Person"
-            print("PERSON DETECTED")
+            # if person detected then detect who person are
+            pred_class = face_model.pred_and_plot(image_path)
+            if pred_class == "Oruç":
+                arduino_info="po"
+            elif pred_class == "Erdem":
+                arduino_info="pe"
+            print(f"{ pred_class} PERSON DETECTED")
         else:
-            arduino_info = "Notperson"
+            arduino_info = "Not"
             print("PERSON NOT DETECTED")
 
         
