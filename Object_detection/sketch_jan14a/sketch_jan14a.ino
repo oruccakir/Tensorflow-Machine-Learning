@@ -34,22 +34,17 @@ void loop() {
   data = Serial.readStringUntil('\n');
 
   if(data != "Not"){
-    if(data == "po")
-        pos = 180;
-    else
-      pos = 0;
     digitalWrite(yellowLed,HIGH);
     digitalWrite(lazerPin,HIGH);
     digitalWrite(redLed,LOW);
-
-    servo.write(pos);
+    servo.write(180);
 
   }
   else{
     digitalWrite(yellowLed,LOW);
     digitalWrite(redLed,HIGH);
     digitalWrite(lazerPin,LOW);
-    servo.write(90);
+    servo.write(0);
   }
   
 

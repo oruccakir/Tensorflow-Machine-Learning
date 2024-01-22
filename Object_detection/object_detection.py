@@ -102,31 +102,21 @@ while True:
         results = model(img)
         info = str(results)
         if "person" in info:
-            # if person detected then detect who person are
-            pred_class = face_model.pred_and_plot(image_path)
-            if pred_class == "Oruç":
-                arduino_info="po"
-            elif pred_class == "Erdem":
-                arduino_info="pe"
-            print(f"{ pred_class} PERSON DETECTED")
+            """
+                # if person detected then detect who person are
+                pred_class = face_model.pred_and_plot(image_path)
+                    if pred_class == "Oruç":
+                        arduino_info="po"
+                    elif pred_class == "Erdem":
+                        arduino_info="pe"
+                    print(f"{ pred_class} PERSON DETECTED")
+            """
+            arduino_info = "pe"
+            print("PERSON DETECTED")
         else:
             arduino_info = "Not"
             print("PERSON NOT DETECTED")
 
-        
-        detections = results.xyxy[0]
-        for det in detections:
-            x1, y1, x2, y2, conf, cls = det
-            print(F"X1 : {x1} and X2 : {x2}")
-            servo_info = ((-9*x1) / 20) + 180
-            servo_info = int(servo_info)
-            if servo_info < 0:
-                servo_info = 0
-            elif servo_info > 180:
-                servo_info = 180
-            servo_info = str(servo_info)
-            arduino_info+=servo_info
-    
         
         arduinoData.write(arduino_info.encode())
         time.sleep(1)
